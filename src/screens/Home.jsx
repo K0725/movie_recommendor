@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react'; // Add useEffect here
-import { Link, useNavigate } from 'react-router-dom';
-import Card from '../components/Card';
-import { supabase } from '../client';
+import { useState, useEffect } from 'react'; 
+// import { Link, useNavigate } from 'react-router-dom';
+import Card from '../components/Card';;
 import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const API_KEY = import.meta.env.VITE_APP_ACCESS_KEY;
 const searchUrl = 'https://api.themoviedb.org/3/search/movie';
