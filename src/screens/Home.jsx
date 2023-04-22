@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react'; 
-// import { Link, useNavigate } from 'react-router-dom';
-import Card from '../components/Card';;
+import Card from '../components/Card';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const API_KEY = import.meta.env.VITE_APP_ACCESS_KEY;
-const searchUrl = 'https://api.themoviedb.org/3/search/movie';
-const genresUrl = 'https://api.themoviedb.org/3/genre/movie/list';
+const SEARCH_URL = 'https://api.themoviedb.org/3/search/movie';
+const GENRES_URL = 'https://api.themoviedb.org/3/genre/movie/list';
 
 function Home() {
   const [result, setResult] = useState([]);
@@ -15,7 +14,7 @@ function Home() {
 
   useEffect(() => {
     axios
-      .get(genresUrl, {
+      .get(GENRES_URL, {
         params: {
           api_key: API_KEY,
         },
@@ -28,11 +27,11 @@ function Home() {
       });
   }, []);
 
-  function handleSearchSubmit(event) {
+  const handleSearchSubmit = (event) => {
     event.preventDefault();
 
     axios
-      .get(searchUrl, {
+      .get(SEARCH_URL, {
         params: {
           api_key: API_KEY,
           query: search,
@@ -52,7 +51,7 @@ function Home() {
       });
   }
 
-  function handleSearchQueryChange(event) {
+  const handleSearchQueryChange = (event) => {
     setSearch(event.target.value);
   }
 
@@ -82,3 +81,4 @@ function Home() {
 }
 
 export default Home;
+
