@@ -1,10 +1,10 @@
-// import{useState, useEffect} from 'react';
-// import {supabase} from "../client";
-// import {useParams} from "react-router-dom";
+import{useState, useEffect} from 'react';
+import {supabase} from "../client";
+import {useParams} from "react-router-dom";
 
 
-// function Edit(){
+function Edit(){
 
-// }
+}
 
-// export default Edit;
+export default Edit;

@@ -5,3 +5,22 @@
   text-align: center;
 }
 
+.App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.App h1 {
+  font-size: 3rem;
+  font-weight: 300;
+  margin-bottom: 1rem;
+  text-align: center;
+  text-transform: uppercase;
+  color: #E50914;
+  font-family: 'Gotham', sans-serif;
+}
+.App h1:hover{
+  text-decoration: none;
+}

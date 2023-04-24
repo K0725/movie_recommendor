@@ -1,78 +1,82 @@
-import { useState, useEffect } from 'react'; 
+import { useState, useEffect } from 'react';
 import Card from '../components/Card';
-import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.min.css';
-
-const API_KEY = import.meta.env.VITE_APP_ACCESS_KEY;
-const SEARCH_URL = 'https://api.themoviedb.org/3/search/movie';
-const GENRES_URL = 'https://api.themoviedb.org/3/genre/movie/list';
+import { supabase } from '../client';
 
 function Home() {
-  const [result, setResult] = useState([]);
-  const [search, setSearch] = useState('');
-  const [genres, setGenres] = useState([]);
+  const [posts, setPosts] = useState([]);
+  const [sortBy, setSortBy] = useState('createdTime');
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
-    axios
-      .get(GENRES_URL, {
-        params: {
-          api_key: API_KEY,
-        },
-      })
-      .then((response) => {
-        setGenres(response.data.genres);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    fetchPosts();
   }, []);
 
-  const handleSearchSubmit = (event) => {
-    event.preventDefault();
+  const fetchPosts = async () => {
+    try {
+      const { data, error } = await supabase.from('posts').select('*');
+      if (error) {
+        throw error;
+      }
+      setPosts(data);
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+    }
+  };
 
-    axios
-      .get(SEARCH_URL, {
-        params: {
-          api_key: API_KEY,
-          query: search,
-        },
-      })
-      .then((response) => {
-        const resultsWithGenres = response.data.results.map((movie) => {
-          const movieGenres = movie.genre_ids.map((id) =>
-            genres.find((genre) => genre.id === id)
-          );
-          return { ...movie, genres: movieGenres };
-        });
-        setResult(resultsWithGenres);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+  const handleSortChange = (e) => {
+    setSortBy(e.target.value);
+  };
 
-  const handleSearchQueryChange = (event) => {
-    setSearch(event.target.value);
-  }
+  const handleSearchQueryChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery === '') {
+      fetchPosts();
+    } else {
+      const filteredPosts = posts.filter((post) =>
+        post.title.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setPosts(filteredPosts);
+    }
+  };
+
+  const sortedPosts = [...posts].sort((a, b) => {
+    if (sortBy === 'createdTime') {
+      return new Date(b.created_at) - new Date(a.created_at);
+    } else {
+      return b.upvotes - a.upvotes;
+    }
+  });
 
   return (
     <div className="Head">
       <div>
-        <form onSubmit={handleSearchSubmit}>
+        <h1>
+          <strong>Rate This Movie 🎥🍿</strong>
+        </h1>
+        <select value={sortBy} onChange={handleSortChange}>
+          <option value="createdTime">Sort by Created Time</option>
+          <option value="upvotes">Sort by Upvotes</option>
+        </select>
+        <form onSubmit={handleSearch}>
           <input
             type="text"
-            value={search}
+            value={searchQuery}
             onChange={handleSearchQueryChange}
+            placeholder="Search for a post by title"
           />
           <button type="submit">Search</button>
         </form>
-        {result.map((movie) => (
+        {sortedPosts.map((post) => (
           <Card
-            key={movie.id}
-            title={movie.title}
-            imgSrc={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-            description={movie.overview}
-            genres={movie.genres.map((genre) => genre.name).join(', ')}
+            key={post.id}
+            title={post.title}
+            imgSrc={post.image}
+            description={post.comment}
+            genres={`Rating: ${post.rating}`}
           />
         ))}
       </div>
@@ -81,4 +85,5 @@ function Home() {
 }
 
 export default Home;
+
 

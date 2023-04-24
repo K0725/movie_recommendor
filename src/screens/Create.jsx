@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { supabase } from "../client";
 import axios from "axios";
-
+// ANOTHER PAVE 
 const API_KEY = import.meta.env.VITE_APP_ACCESS_KEY;
 const searchUrl = "https://api.themoviedb.org/3/search/movie";
 
@@ -55,7 +55,7 @@ function Create() {
   };
 
   return (
-    <div className="container mx-auto">
+    <div>
       <form onSubmit={handleSearchSubmit}>
         <input
           type="text"
