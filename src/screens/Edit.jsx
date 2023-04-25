@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../client';
 import { useParams, useNavigate } from 'react-router-dom';
-
+import './Edit.css';
 function Edit() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -63,7 +63,11 @@ function Edit() {
 
   return (
     <div className="Edit">
-      <h1>Edit Movie</h1>
+      <h3>Editing Post...</h3>
+      <br>
+      </br>
+      <br>
+      </br>
       <form onSubmit={handleSubmit}>
         <label htmlFor="rating">Rating:</label>
         <input
@@ -80,6 +84,8 @@ function Edit() {
           onChange={(e) => setComments(e.target.value)}
         ></textarea>
         <br />
+        <br>
+        </br>
         <button type="submit">Update</button>
       </form>
     </div>

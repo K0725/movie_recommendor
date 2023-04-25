@@ -11,7 +11,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    margin-bottom: 20px;
+    margin-bottom: 40x;
   }
   
   input[type='text'] {
@@ -25,7 +25,7 @@
   button {
     padding: 10px;
     font-size: 16px;
-    background-color: #007bff;
+    background-color: #E50914;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -34,7 +34,7 @@
   }
   
   button:hover {
-    background-color: #0056b3;
+    background-color: E50914;
   }
   
   .Home {

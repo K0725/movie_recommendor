@@ -68,7 +68,7 @@ function Create() {
   
 
   return (
-    <div>
+    <div className="Create">
       <h3>Select the Movie and Let's create a post!</h3>
       <form onSubmit={handleSearchSubmit}>
         <input

@@ -1,11 +1,18 @@
 import React from 'react';
 import './Post.css'
+import { Link } from'react-router-dom';
 
 function Post({  id, title, rating, comments, time, upvotes, handleDelete, handleUpvote }) {
   const formattedTime = new Date(time).toLocaleString();
 
   return (
     <div className="Post">
+      <div className="post-controls">
+        <button onClick={() => handleUpvote(id) }>Upvote</button>
+        <Link to={`/edit/${id}`}>
+          <button>...</button> 
+        </Link>
+      </div>
       <h3>{title}</h3>
       <p>
         <strong>Rating:</strong> {rating}
@@ -19,10 +26,10 @@ function Post({  id, title, rating, comments, time, upvotes, handleDelete, handl
       <p>
         <strong>Upvotes:</strong> {upvotes}
       </p>
-      <button onClick={() => handleUpvote(id)}>Upvote</button>
       <button onClick={() => handleDelete(id)}>Delete</button>
     </div>
   );
 }
 
 export default Post;
+

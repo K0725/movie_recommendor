@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Posts from '../components/Posts';
 import { supabase } from '../client';
+import {Link} from 'react-router-dom';
 
 function Home() {
   const [posts, setPosts] = useState([]);
@@ -100,11 +101,17 @@ function Home() {
         <h1>
           <strong>Rate This Movie 🎥🍿</strong>
         </h1>
+        <br>
+        </br>
+        <br>
+        </br>
         
         <select value={sortBy} onChange={handleSortChange}>
           <option value="createdTime">Sort by Created Time</option>
           <option value="upvotes">Sort by Upvotes</option>
         </select>
+        <br>
+        </br>
         <form onSubmit={handleSearch}>
           <input
             type="text"
