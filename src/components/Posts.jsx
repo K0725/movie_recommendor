@@ -1,8 +1,7 @@
-import { useState, useEffect } from 'react';
-import { supabase } from '../client';
-import Post from './Post';
 
-function Posts({ posts, handleDelete }) {
+import Post from '../screens/Post';
+
+function Posts({ posts, handleDelete, handleUpvote }) {
   return (
     <div className="Posts">
       {posts.map((post, index) => (
@@ -12,13 +11,14 @@ function Posts({ posts, handleDelete }) {
           title={post.title}
           rating={post.rating}
           comments={post.comments}
+          time={post.time}
+          upvotes={post.upvotes} // Add this line
           handleDelete={handleDelete}
+          handleUpvote={handleUpvote} // Add this line
         />
       ))}
     </div>
   );
 }
-
-
 
 export default Posts;

@@ -37,3 +37,14 @@
     background-color: #0056b3;
   }
   
+  .Home {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .Posts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }

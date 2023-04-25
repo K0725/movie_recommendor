@@ -1,15 +1,22 @@
 import { useState } from "react";
 import { supabase } from "../client";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 const API_KEY = import.meta.env.VITE_APP_ACCESS_KEY;
 const searchUrl = "https://api.themoviedb.org/3/search/movie";
+
+function formatDate(timestamp) {
+  const date = new Date(timestamp);
+  return date.toLocaleString();
+}
 
 function Create() {
   const [search, setSearch] = useState("");
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
-  const [rating, setRating] = useState(0);
+  const [rating, setRating] = useState(1);
   const [comment, setComment] = useState("");
+  const navigate = useNavigate();
 
   const handleSearchChange = (e) => {
     setSearch(e.target.value);
@@ -44,7 +51,7 @@ function Create() {
           title: selectedMovie.title,
           rating: rating,
           comments: comment,
-          time: new Date(),
+          time: new Date().toISOString(),
         },
       ]);
   
@@ -53,7 +60,7 @@ function Create() {
         throw error;
       }
   
-      alert("Post created successfully!");
+      navigate('/');
     } catch (error) {
       console.log("Error creating post:", error.message);
     }
@@ -62,6 +69,7 @@ function Create() {
 
   return (
     <div>
+      <h3>Select the Movie and Let's create a post!</h3>
       <form onSubmit={handleSearchSubmit}>
         <input
           type="text"
@@ -107,11 +115,11 @@ function Create() {
               ></textarea>
             </label>
             <button type="submit">Submit</button>
-          </form>
+            </form>
+          </div>
+        )}
         </div>
-      )}
-    </div>
-  );
+);
 }
 
 export default Create;

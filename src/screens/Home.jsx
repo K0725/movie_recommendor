@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Posts from './Posts';
+import Posts from '../components/Posts';
 import { supabase } from '../client';
 
 function Home() {
@@ -32,6 +32,27 @@ function Home() {
       setPosts(data);
     } catch (error) {
       console.error('Error fetching posts:', error);
+    }
+  };
+
+  const handleUpvote = async (postId) => {
+    try {
+      const post = posts.find((post) => post.id === postId);
+      const newUpvotes = post.upvotes + 1;
+  
+      const { data, error } = await supabase
+        .from("Posts")
+        .update({ upvotes: newUpvotes })
+        .eq("id", postId);
+  
+      if (error) {
+        console.log("Error updating upvotes:", error);
+        throw error;
+      }
+  
+      setPosts(posts.map((post) => (post.id === postId ? { ...post, upvotes: newUpvotes } : post)));
+    } catch (error) {
+      console.log("Error handling upvote:", error.message);
     }
   };
   
@@ -93,10 +114,17 @@ function Home() {
           />
           <button type="submit">Search</button>
         </form>
-        <Posts posts={sortedPosts} handleDelete={handleDelete} />
+        <div className="Posts">
+          <Posts
+            posts={sortedPosts}
+            handleDelete={handleDelete}
+            handleUpvote={handleUpvote}
+          />
+        </div>
       </div>
     </div>
   );
 }
 
 export default Home;
+

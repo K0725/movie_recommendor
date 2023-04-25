@@ -1,10 +1,11 @@
 import React from 'react';
+import './Post.css'
 
-function Post({  id, title, rating, comments, time, handleDelete }) {
+function Post({  id, title, rating, comments, time, upvotes, handleDelete, handleUpvote }) {
   const formattedTime = new Date(time).toLocaleString();
 
   return (
-    <div className="Post" style={{ border: '1px solid black', padding: '16px', marginBottom: '8px' }}>
+    <div className="Post">
       <h3>{title}</h3>
       <p>
         <strong>Rating:</strong> {rating}
@@ -15,6 +16,10 @@ function Post({  id, title, rating, comments, time, handleDelete }) {
       <p>
         <strong>Comments:</strong> {comments}
       </p>
+      <p>
+        <strong>Upvotes:</strong> {upvotes}
+      </p>
+      <button onClick={() => handleUpvote(id)}>Upvote</button>
       <button onClick={() => handleDelete(id)}>Delete</button>
     </div>
   );

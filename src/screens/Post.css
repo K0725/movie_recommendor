@@ -1,9 +1,8 @@
-.post {
-    border: 1px solid #ccc;
-    padding: 1rem;
-    margin-bottom: 1rem;
-  }
-  
-  .post h2 {
-    margin-top: 0;
-  }
+.Post {
+  border: 2px solid #E50914;
+  padding: 16px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  background-color: black;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
