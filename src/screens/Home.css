@@ -1,50 +1,51 @@
 .Head {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-  }
-  
-  form {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 40x;
-  }
-  
-  input[type='text'] {
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-right: 10px;
-  }
-  
-  button {
-    padding: 10px;
-    font-size: 16px;
-    background-color: #E50914;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  button:hover {
-    background-color: E50914;
-  }
-  
-  .Home {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  
-  .Posts {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 40x;
+  color: #E50914;
+}
+
+input[type='text'] {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+button {
+  padding: 10px;
+  font-size: 16px;
+  background-color: #E50914;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #E50914;
+}
+
+.Home {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.Posts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}

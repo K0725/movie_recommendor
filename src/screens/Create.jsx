@@ -2,6 +2,9 @@ import { useState } from "react";
 import { supabase } from "../client";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import "./Edit.css";
+
+
 const API_KEY = import.meta.env.VITE_APP_ACCESS_KEY;
 const searchUrl = "https://api.themoviedb.org/3/search/movie";
 

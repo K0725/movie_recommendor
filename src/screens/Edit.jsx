@@ -63,7 +63,7 @@ function Edit() {
 
   return (
     <div className="Edit">
-      <h3>Editing Post...</h3>
+      <h3>Editing Post</h3>
       <br>
       </br>
       <br>
