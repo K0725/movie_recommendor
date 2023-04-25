@@ -1,75 +1,61 @@
-import {useState, useEffect} from 'react';
-import {supabase} from '../client';
-import Card from '../components/Card'
+import { useState, useEffect } from 'react';
+import { supabase } from '../client';
+import Post from './Post';
 
-function Posts(){
-    const [title, setTitle] = useState('');
-    const [rating, setRating] = useState('');
-    const [comment, setComment] = useState('');
-    const [posts, setPosts] = useState([]);
+function Posts() {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
+  const fetchPosts = async () => {
+    try {
+      const { data, error, status } = await supabase.from('movie').select('*');
   
-    const handleSubmit = async (event) => {
-      event.preventDefault();
-    
-
-    const { data, error } = await supabase.from('reviews').insert([
-        { title, rating, comment },
-    ]);
+      if (status !== 200) {
+        console.error('Non-200 status code:', status);
+      }
+  
+      if (error) {
+        console.error('Supabase error:', error);
+        throw error;
+      }
+  
+      if (!data) {
+        console.error('No data received from Supabase');
+        return;
+      }
+  
+      setPosts(data);
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+    }
   };
 
-    useEffect(() => {
-      fetchPosts();
-    }, []);
-
-    const fetchPosts = async () => {
-      let { data: posts, error } = await supabase.from('reviews').select('*')
-      setPosts(posts)
+  const handleDelete = async (id) => {
+    try {
+      const { error } = await supabase.from('movie').delete().eq('id', id);
+      if (error) throw error;
+      setPosts(posts.filter((post) => post.id !== id));
+    } catch (error) {
+      console.error('Error deleting post:', error);
     }
+  };
 
   return (
-    <div>
-      <h1>Post a Review</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Movie Title:
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          Rating:
-          <input
-            type="number"
-            min="1"
-            max="10"
-            value={rating}
-            onChange={(e) => setRating(e.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          Comment:
-          <textarea
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-          />
-        </label>
-        <br />
-        <button type="submit">Submit</button>
-      </form>
-      <div>
-        {posts.map((post) => (
-          <Card
-            key={post.id}
-            title={post.title}
-            rating={post.rating}
-            comment={post.comment}
-          />
-        ))}
-      </div>
+    <div className="Posts">
+      {posts.map((post) => (
+        <Post
+          key={post.id}
+          id={post.id}
+          title={post.title}
+          rating={post.rating}
+          comments={post.comments}
+          // category={post.category} // Add category prop
+          handleDelete={handleDelete}
+        />
+      ))}
     </div>
   );
 }

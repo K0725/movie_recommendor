@@ -9,7 +9,8 @@ const Card = ({ title, imgSrc, description, genres }) => {
       <img src={imgSrc} alt={title} />
       <p>{description}</p>
       <p>Genres: {genres}</p>
-      <Link to={'Edit/'}> {/* Add the appropriate ID or path if needed */}
+      
+      <Link to={'Edit/'}> 
         <h2 className="dot">...</h2>
       </Link>
     </div>

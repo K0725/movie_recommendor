@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Card from '../components/Card';
+import Posts from './Posts';
 import { supabase } from '../client';
 
 function Home() {
@@ -13,13 +13,35 @@ function Home() {
 
   const fetchPosts = async () => {
     try {
-      const { data, error } = await supabase.from('posts').select('*');
+      const { data, error, status } = await supabase.from('movie').select('*');
+  
+      if (status !== 200) {
+        console.error('Non-200 status code:', status);
+      }
+  
       if (error) {
+        console.error('Supabase error:', error);
         throw error;
       }
+    
+      if (!data) {
+        console.error('No data received from Supabase');
+        return;
+      }
+  
       setPosts(data);
     } catch (error) {
       console.error('Error fetching posts:', error);
+    }
+  };
+  
+  const handleDelete = async (id) => {
+    try {
+      const { error } = await supabase.from('movie').delete().eq('id', id);
+      if (error) throw error;
+      setPosts(posts.filter((post) => post.id !== id));
+    } catch (error) {
+      console.error('Error deleting post:', error);
     }
   };
 
@@ -57,6 +79,7 @@ function Home() {
         <h1>
           <strong>Rate This Movie 🎥🍿</strong>
         </h1>
+        
         <select value={sortBy} onChange={handleSortChange}>
           <option value="createdTime">Sort by Created Time</option>
           <option value="upvotes">Sort by Upvotes</option>
@@ -70,20 +93,10 @@ function Home() {
           />
           <button type="submit">Search</button>
         </form>
-        {sortedPosts.map((post) => (
-          <Card
-            key={post.id}
-            title={post.title}
-            imgSrc={post.image}
-            description={post.comment}
-            genres={`Rating: ${post.rating}`}
-          />
-        ))}
+        <Posts/>
       </div>
     </div>
   );
 }
 
 export default Home;
-
-
