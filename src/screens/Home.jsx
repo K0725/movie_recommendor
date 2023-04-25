@@ -89,11 +89,11 @@ function Home() {
             type="text"
             value={searchQuery}
             onChange={handleSearchQueryChange}
-            placeholder="Search for a post by title"
+            placeholder="Search for a post by movie title"
           />
           <button type="submit">Search</button>
         </form>
-        <Posts/>
+        <Posts posts={sortedPosts} handleDelete={handleDelete} />
       </div>
     </div>
   );
