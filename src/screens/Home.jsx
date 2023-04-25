@@ -13,7 +13,7 @@ function Home() {
 
   const fetchPosts = async () => {
     try {
-      const { data, error, status } = await supabase.from('movie').select('*');
+      const { data, error, status } = await supabase.from('Posts').select('*');
   
       if (status !== 200) {
         console.error('Non-200 status code:', status);
@@ -37,7 +37,7 @@ function Home() {
   
   const handleDelete = async (id) => {
     try {
-      const { error } = await supabase.from('movie').delete().eq('id', id);
+      const { error } = await supabase.from('Posts').delete().eq('id', id);
       if (error) throw error;
       setPosts(posts.filter((post) => post.id !== id));
     } catch (error) {

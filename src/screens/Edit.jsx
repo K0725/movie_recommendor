@@ -15,7 +15,7 @@ function Edit() {
 
   const fetchMovie = async () => {
     try {
-      const { data, error, status } = await supabase.from('movie').select('*').eq('id', id).single();
+      const { data, error, status } = await supabase.from('Posts').select('*').eq('id', id).single();
 
       if (status !== 200) {
         console.error('Non-200 status code:', status);
@@ -43,7 +43,7 @@ function Edit() {
     e.preventDefault();
     try {
       const { error } = await supabase
-        .from('movie')
+        .from('Posts')
         .update({ rating, comments })
         .eq('id', id);
 

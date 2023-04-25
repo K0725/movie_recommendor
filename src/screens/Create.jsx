@@ -1,18 +1,15 @@
 import { useState } from "react";
 import { supabase } from "../client";
 import axios from "axios";
-// ANOTHER PAGE
 const API_KEY = import.meta.env.VITE_APP_ACCESS_KEY;
 const searchUrl = "https://api.themoviedb.org/3/search/movie";
-const categoryUrl = "https://api.themoviedb.org/3/genre/movie/list";
 
 function Create() {
   const [search, setSearch] = useState("");
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
-  const [rating, setRating] = useState(10);
+  const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
-` `
 
   const handleSearchChange = (e) => {
     setSearch(e.target.value);
@@ -42,27 +39,20 @@ function Create() {
     }
   
     try {
-      // Fetch the category data
-      const categoryResponse = await axios.get(categoryUrl, {
-        params: {
-          api_key: API_KEY,
-        },
-      });
-      const categories = categoryResponse.data.genres;
-      // Find the category of the selected movie
-      const selectedMovieCategory = categories.find((category) =>
-        selectedMovie.genre_ids.includes(category.id)
-      );
-      // Insert the post with the category value
-      await supabase.from("movie").insert([
+      const { data, error } = await supabase.from("Posts").insert([
         {
           title: selectedMovie.title,
           rating: rating,
           comments: comment,
-          category: selectedMovieCategory.name, // Set the category value
           time: new Date(),
         },
       ]);
+  
+      if (error) {
+        console.log("Error response from Supabase:", error);
+        throw error;
+      }
+  
       alert("Post created successfully!");
     } catch (error) {
       console.log("Error creating post:", error.message);

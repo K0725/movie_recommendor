@@ -3,13 +3,11 @@ import { supabase } from '../client';
 import Post from './Post';
 
 function Posts({ posts, handleDelete }) {
-  // Remove the state and useEffect from here
-
   return (
     <div className="Posts">
-      {posts.map((post) => (
+      {posts.map((post, index) => (
         <Post
-          key={post.id}
+          key={`${post.id}-${index}`} 
           id={post.id}
           title={post.title}
           rating={post.rating}
@@ -20,6 +18,7 @@ function Posts({ posts, handleDelete }) {
     </div>
   );
 }
+
 
 
 export default Posts;
